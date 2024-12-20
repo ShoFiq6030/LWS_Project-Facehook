@@ -37,8 +37,9 @@ function LoginForm() {
       console.log(err);
       setError('root.random',{
         type: "server",
-        message: `user ${formData.email} is not found`,
+        message: err.response.data.error,
       })
+      // console.log(err.response.data.error)
     }
   }
   return (

@@ -8,7 +8,7 @@ function ProfileInfo() {
   return (
     <div className="flex flex-col items-center py-8 text-center">
       <ProfileImg />
-      <div>
+      <div className="mt-4 lg:mt-6">
         <h3 className="text-2xl font-semibold text-white lg:text-[28px]">
         {state?.user?.firstName} {state?.user?.lastName}
         </h3>

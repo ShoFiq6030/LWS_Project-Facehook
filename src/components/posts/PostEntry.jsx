@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import AddPhoto from "../../assets/icons/addPhoto.svg";
 import Field from "./../common/Field";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth";
 import { usePost } from "./../../hooks/usePost";
-import useApi  from "../../hooks/useApi";
+import useApi from "../../hooks/useApi";
 import { actions } from "../../action/index";
+import img from "../../assets/images/avatars/avatar_2.png";
 
 function PostEntry({ onCreate }) {
   const { auth } = useAuth();
-  const {state, dispatch } = usePost();
+  const { state, dispatch } = usePost();
   const { api } = useApi();
+  const [uploadImg, setUploadImg] = useState(null);
   console.log(state);
+  const imgRef = useRef();
 
   const {
     register,
@@ -20,9 +23,32 @@ function PostEntry({ onCreate }) {
   } = useForm();
 
   const avatar = auth?.user?.avatar;
+ 
+  
+  const handleImg = (e) => {
+    const uploadedFile = e.target.files[0];
+    const cashedURL = URL.createObjectURL(uploadedFile);
+    setUploadImg(cashedURL);
+  };
 
-  const handlePostSubmit = (formData) => {
-    console.log(formData);
+  const handlePostSubmit = (content) => {
+    const uploadedFile = imgRef.current?.files[0];
+    console.log(content);
+    const formData = new FormData();
+    if (!uploadedFile) {
+      console.error("No file selected!");
+      
+    }
+    
+    if (!content) {
+      console.error("Content is empty!");
+      return;
+    }
+  
+    formData.append("image", uploadedFile);
+    formData.append("content",content.content);
+    console.log(formData[1]);
+
     dispatch({ type: actions.post.DATA_FETCHING });
     async function postCreate() {
       try {
@@ -30,7 +56,7 @@ function PostEntry({ onCreate }) {
           `${import.meta.env.VITE_BASE_URL}/posts`,
           formData
         );
-        console.log(response);
+        
 
         if (response.status === 200) {
           dispatch({ type: actions.post.DATA_CREATED, payload: response.data });
@@ -40,7 +66,6 @@ function PostEntry({ onCreate }) {
         dispatch({ type: actions.post.DATA_CREATE_ERROR, payload: err });
         console.log(err.message);
       }
-
     }
     postCreate();
   };
@@ -73,8 +98,20 @@ function PostEntry({ onCreate }) {
             <img src={AddPhoto} alt="Add Photo" />
             Add Photo
           </label>
-          <input type="file" name="photo" id="photo" className="hidden" />
+          <input
+            ref={imgRef}
+            onChange={handleImg}
+            type="file"
+            name="photo"
+            id="photo"
+            className="hidden"
+          />
         </div>
+        {uploadImg && (
+          <div>
+            <img className="m-auto " src={uploadImg} alt="uploadImg" />
+          </div>
+        )}
         <Field label="" error={errors.content}>
           <textarea
             {...register("content", {

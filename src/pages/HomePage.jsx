@@ -9,7 +9,7 @@ import NewPost from "../components/posts/NewPost";
 
 function HomePage() {
   const { state, dispatch } = usePost();
-  console.log(state);
+
   const { api } = useApi();
   useEffect(() => {
     dispatch({ type: actions.post.DATA_FETCHING });

@@ -1,15 +1,19 @@
 import React from "react";
 import { useAvatar } from "../../hooks/useAvatar";
 import PostCommentList from "./PostCommentList ";
+import { useAuth } from "../../hooks/useAuth";
 
 function PostComments({ post }) {
+  const {auth}=useAuth();
+  const userAvatar=auth.user.avatar
+  
   const { avatarURL } = useAvatar(post);
   return (
     <div>
       <div className="flex-center mb-3 gap-2 lg:gap-4">
         <img
           className="max-w-7 max-h-7 rounded-full lg:max-h-[34px] lg:max-w-[34px]"
-          src={avatarURL}
+          src={`${import.meta.env.VITE_BASE_URL}/${userAvatar}`}
           alt="avatar"
         />
 

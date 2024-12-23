@@ -42,11 +42,12 @@ const postReducer = (state, action) => {
         //         ...state,
         //         posts: state.posts.map(post => post._id === action.payload._id ? action.payload : post)
         //     }
-        // case actions.post.POST_DELETED:
-        //     return {
-        //         ...state,
-        //         posts: state.posts.filter(post => post._id !== action.payload)
-        //     }
+        case actions.post.POST_DELETED:
+            return {
+                ...state,
+                loading: false,
+                posts: state.posts.filter(post => post.id !== action.payload)
+            }
         // case actions.post.POST_LIKED:
         //     return {
         //         ...state,

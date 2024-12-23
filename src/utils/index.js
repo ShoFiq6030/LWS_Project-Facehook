@@ -1,3 +1,5 @@
+import { useAuth } from "../hooks/useAuth";
+
 export const getDateDifferenceFromNow = (fromDate) => {
     let difference = new Date().getTime() - new Date(fromDate).getTime();
 
@@ -27,3 +29,11 @@ export const getDateDifferenceFromNow = (fromDate) => {
 
     return message;
 };
+
+
+
+export const isLikedByMe = (post) => {
+    const {auth}=useAuth();
+    return post?.likes?.some((like) => like === auth?.user?.id);
+
+}

@@ -9,7 +9,7 @@ function PostCard({post}) {
     <article className="card mt-6 lg:mt-8">
       <PostHeader post={post} />
       <PostBody poster={post?.image} content={post?.content} />
-      <PostAction postId={post?.id} commentCount={post?.comments?.length} />
+      <PostAction postId={post?.id} commentCount={post?.comments?.length} post={post} />
       <PostComments post={post} />
     </article>
   );

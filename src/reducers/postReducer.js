@@ -53,11 +53,11 @@ const postReducer = (state, action) => {
         //         ...state,
         //         posts: state.posts.map(post => post._id === action.payload._id ? action.payload : post)
         //     }
-        // case actions.post.POST_COMMENTED:
-        //     return {
-        //         ...state,
-        //         posts: state.posts.map(post => post._id === action.payload._id ? action.payload : post)
-        //     }
+        case actions.post.POST_COMMENTED:
+            return {
+                ...state,
+                posts: state.posts.map(post => post.id === action.payload.id ? action.payload : post)
+            }
         default:
             return state
 

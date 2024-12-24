@@ -1,9 +1,9 @@
 import React from 'react'
 import PostCard from './PostCard'
 
-function PostList({ posts }) {
+function PostList({ posts,dispatch }) {
   return (
-    !!posts && posts.map((post) => <PostCard key={post.id} post={post} />)
+    !!posts && posts.map((post) => <PostCard key={post.id} post={post} dispatch={dispatch} />)
   )
 }
 

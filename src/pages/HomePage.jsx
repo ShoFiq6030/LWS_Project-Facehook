@@ -41,7 +41,7 @@ function HomePage() {
   return (
     <div>
       <NewPost />
-      <PostList posts={state?.posts} />
+    <PostList posts={state?.posts} dispatch={dispatch} />
     </div>
   );
 }
